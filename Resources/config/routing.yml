@@ -1,0 +1,3 @@
+acme_operations_homepage:
+    pattern:  /operations/{name}
+    defaults: { _controller: operations.calculator.controller:indexAction }

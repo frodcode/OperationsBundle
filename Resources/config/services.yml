@@ -1,0 +1,38 @@
+parameters:
+#    acme_operations.example.class: Acme\OperationsBundle\Example
+
+services:
+
+  operations.service.calculator.calculator:
+    class: Acme\OperationsBundle\Calculator\Calculator
+    arguments: ["@operations.service.parse.fileparser", "@operations.service.operation.register"]
+  operations.service.operation.register:
+    class: Acme\OperationsBundle\Calculator\Operation\OperationCalculatorRegister
+    arguments:
+      -
+        devide: "@operations.service.operation.devide"
+        minus: "@operations.service.operation.minus"
+        multiply: "@operations.service.operation.multiply"
+        apply: "@operations.service.operation.apply"
+        add: "@operations.service.operation.plus"
+
+  operations.service.parse.fileparser:
+    class: Acme\OperationsBundle\Calculator\Parse\FileParser
+  operations.service.operation.devide:
+    class: Acme\OperationsBundle\Calculator\Operation\DivideCalculator
+  operations.service.operation.minus:
+    class: Acme\OperationsBundle\Calculator\Operation\MinusCalculator
+  operations.service.operation.multiply:
+    class: Acme\OperationsBundle\Calculator\Operation\MultiplyCalculator
+  operations.service.operation.plus:
+    class: Acme\OperationsBundle\Calculator\Operation\PlusCalculator
+  operations.service.operation.apply:
+    class: Acme\OperationsBundle\Calculator\Operation\ApplyCalculator
+  operations.calculator.controller:
+    class: Acme\OperationsBundle\Controller\CalculatorController
+    arguments: ["@templating", "@operations.service.calculator.calculator"]
+
+
+#    acme_operations.example:
+#        class: %acme_operations.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
