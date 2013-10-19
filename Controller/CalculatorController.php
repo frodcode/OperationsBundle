@@ -5,7 +5,6 @@ namespace Acme\OperationsBundle\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Acme\OperationsBundle\Calculator\Calculator;
-use Acme\OperationsBundle\Calculator\DataSourceHandler;
 
 class CalculatorController
 {
@@ -14,18 +13,15 @@ class CalculatorController
 
 	private $calculator;
 
-	private $dataSourceHandler;
-
-    public function __construct(EngineInterface $templating, Calculator $calculator, DataSourceHandler $dataSourceHandler)
+    public function __construct(EngineInterface $templating, Calculator $calculator)
     {
         $this->templating = $templating;
 		$this->calculator = $calculator;
-		$this->dataSourceHandler = $dataSourceHandler;
     }
 
     public function indexAction($name)
     {
-		if (!$this->dataSourceHandler->dataSourceExists($name)) {
+		if (!$this->calculator->isSourceKnown($name)) {
 			throw new NotFoundHttpException(sprintf('File source with name "%s" for calculation does not exist', $name));
 		}
 		$result = $this->calculator->calculate($name);

@@ -7,6 +7,8 @@ use Acme\OperationsBundle\Calculator\Parse\IParser;
 use Acme\OperationsBundle\Calculator\Parse\ParseResult;
 
 /**
+ * Calculator is a facade to calculation logic.
+ *
  * @author odehnal@medio.cz
  */
 class Calculator
@@ -18,7 +20,7 @@ class Calculator
 
 	private $dataSourceHandler;
 
-	public function __construct(IParser $parser, OperationCalculatorRegister $operationCalculatorRegister, DataSourceHandler $dataSourceHandler)
+	public function __construct(IParser $parser, OperationCalculatorRegister $operationCalculatorRegister, IDataSourceHandler $dataSourceHandler)
 	{
 		$this->parser = $parser;
 		$this->operationCalculatorRegister = $operationCalculatorRegister;
@@ -48,6 +50,11 @@ class Calculator
 	private function findOperationCalculatorFor(ParseResult $parseResult)
 	{
 		return $this->operationCalculatorRegister->getByKey($parseResult->getOperationName());
+	}
+
+	public function isSourceKnown($name)
+	{
+		return $this->dataSourceHandler->dataSourceExists($name);
 	}
 
 }

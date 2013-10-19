@@ -5,7 +5,7 @@ namespace Acme\OperationsBundle\Calculator;
 /**
  * @author odehnal@medio.cz
  */
-class DataSourceHandler
+class DataSourceHandler implements IDataSourceHandler
 {
 
 	private $sourceDir;

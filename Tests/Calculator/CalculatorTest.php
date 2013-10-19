@@ -52,4 +52,17 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame(16, $result);
 	}
 
+	public function testIsSourceKnown()
+	{
+		$parser = $this->getMockBuilder('Acme\OperationsBundle\Calculator\Parse\IParser')->disableOriginalConstructor()->getMock();
+		$operationCalculatorRegister = $this->getMockBuilder('Acme\OperationsBundle\Calculator\Operation\OperationCalculatorRegister')->disableOriginalConstructor()->getMock();
+		$dataSourceHandler = $this->getMockBuilder('Acme\OperationsBundle\Calculator\DataSourceHandler')->disableOriginalConstructor()->getMock();
+
+		$calculator = new Calculator($parser, $operationCalculatorRegister, $dataSourceHandler);
+
+		$name = 'test';
+		$dataSourceHandler->expects($this->once())->method('dataSourceExists')->with($name)->will($this->returnValue(TRUE));
+		$this->assertTrue($calculator->isSourceKnown($name));
+	}
+
 }
