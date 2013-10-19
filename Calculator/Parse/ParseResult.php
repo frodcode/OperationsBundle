@@ -12,7 +12,6 @@ class ParseResult
 
 	private $value;
 
-
 	public function __construct($operationName, $value)
 	{
 		$this->operationName = $operationName;

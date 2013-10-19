@@ -1,11 +1,11 @@
 parameters:
-#    acme_operations.example.class: Acme\OperationsBundle\Example
+  data_location: "%kernel.root_dir%/../src/Acme/OperationsBundle/Resources/data"
 
 services:
 
   operations.service.calculator.calculator:
     class: Acme\OperationsBundle\Calculator\Calculator
-    arguments: ["@operations.service.parse.fileparser", "@operations.service.operation.register"]
+    arguments: ["@operations.service.parse.fileparser", "@operations.service.operation.register", "@operations.service.data_source_handler"]
   operations.service.operation.register:
     class: Acme\OperationsBundle\Calculator\Operation\OperationCalculatorRegister
     arguments:
@@ -30,9 +30,7 @@ services:
     class: Acme\OperationsBundle\Calculator\Operation\ApplyCalculator
   operations.calculator.controller:
     class: Acme\OperationsBundle\Controller\CalculatorController
-    arguments: ["@templating", "@operations.service.calculator.calculator"]
-
-
-#    acme_operations.example:
-#        class: %acme_operations.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    arguments: ["@templating", "@operations.service.calculator.calculator", "@operations.service.data_source_handler"]
+  operations.service.data_source_handler:
+    class: Acme\OperationsBundle\Calculator\DataSourceHandler
+    arguments: [%data_location%]

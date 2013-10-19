@@ -20,17 +20,17 @@ class FileParser implements IParser
 		return $realOrderRows;
 	}
 
-	public function parse($what)
+	public function parse($content)
 	{
-		if (!file_exists($what)) {
-			throw new \Acme\OperationsBundle\Calculator\Exception\IllegalArgumentException(sprintf('Cannot parse file "%s". File does not exist', $what));
-		}
-		$content = file_get_contents($what);
-		$rows = $this->getRowsFromContent($content);
-		$results = array();
+		try {
+			$rows = $this->getRowsFromContent($content);
+			$results = array();
 
-		foreach ($rows as $row) {
-			$results[] = $this->createParseResult($row);
+			foreach ($rows as $row) {
+				$results[] = $this->createParseResult($row);
+			}
+		} catch (\Acme\OperationsBundle\Calculator\Exception\IllegalArgumentException $e) {
+			throw new \Acme\OperationsBundle\Calculator\Exception\IllegalArgumentException('Cannot parse given content. Original message: ' . $e->getMessage(), NULL, $e);
 		}
 		return $results;
 	}

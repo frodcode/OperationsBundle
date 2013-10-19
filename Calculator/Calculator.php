@@ -16,21 +16,25 @@ class Calculator
 
 	private $operationCalculatorRegister;
 
-	public function __construct(IParser $parser, OperationCalculatorRegister $operationCalculatorRegister)
+	private $dataSourceHandler;
+
+	public function __construct(IParser $parser, OperationCalculatorRegister $operationCalculatorRegister, DataSourceHandler $dataSourceHandler)
 	{
 		$this->parser = $parser;
 		$this->operationCalculatorRegister = $operationCalculatorRegister;
+		$this->dataSourceHandler = $dataSourceHandler;
 	}
 
 	/**
 	 * Parse and calculate result from input file
 	 *
-	 * @param mixed $file
+	 * @param mixed $source
 	 * @return float
 	 */
-	public function calculate($file)
+	public function calculate($source)
 	{
-		$parseResults = $this->parser->parse($file);
+		$content = $this->dataSourceHandler->getContent($source);
+		$parseResults = $this->parser->parse($content);
 
 		// initial value for chain of responsibility for calculation
 		$calculatedValue = NULL;
