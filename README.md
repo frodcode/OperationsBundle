@@ -3,6 +3,9 @@ OperationsBundle
 
 Gorkana Group Coding Exercise
 
-Výsledek lze získat po přidání bundle na adrese /operations/1 (kde 1 je vlastně název souboru - soubor jsou 1 - 3)
+Whole application can be launched by CalculatorController which is mapped to /operations/\<id\> (known ids are 1 - 3).
 
-Toto řešení může být v některých případech dost přehnané co se týče složitosti. Na druhou stranu je velmi pružné, pokud se změní respektive přidá způsob zadání úlohy (třeba na XML, JSON), nebo se změní podoba aktuální úlohy, nebo se přidají operace apod.
+Model interface is represented by service Calculator. Its most important method is calculate which takes as an argument name of source. Source is read by IDataSourceHandler, parsed
+by IParser and calculate by registered IOperationCalculators.
+
+Final code might be considered as a little overhead but I wanted to do it as flexible as possible. You can add more operations, change data store (DB, file, web service whatever) or data format (XML, JSON etc.).
