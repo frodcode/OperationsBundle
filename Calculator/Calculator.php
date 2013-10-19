@@ -30,12 +30,12 @@ class Calculator
 	/**
 	 * Parse and calculate result from input file
 	 *
-	 * @param mixed $source
+	 * @param mixed $sourceId
 	 * @return float
 	 */
-	public function calculate($source)
+	public function calculate($sourceId)
 	{
-		$content = $this->dataSourceHandler->getContent($source);
+		$content = $this->dataSourceHandler->getContent($sourceId);
 		$parseResults = $this->parser->parse($content);
 
 		// initial value for chain of responsibility for calculation
@@ -52,9 +52,15 @@ class Calculator
 		return $this->operationCalculatorRegister->getByKey($parseResult->getOperationName());
 	}
 
-	public function isSourceKnown($name)
+	/**
+	 * Check if the source exists in calculator source "database"
+	 *
+	 * @param mixed $sourceId
+	 * @return bool
+	 */
+	public function isSourceKnown($sourceId)
 	{
-		return $this->dataSourceHandler->dataSourceExists($name);
+		return $this->dataSourceHandler->dataSourceExists($sourceId);
 	}
 
 }

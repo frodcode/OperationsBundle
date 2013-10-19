@@ -53,7 +53,7 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * @expectedException \Acme\OperationsBundle\Calculator\Exception\IllegalArgumentException
-	 * @expectedExceptionMessage Cannot parse given content. Original message
+	 * @expectedExceptionMessage Cannot parse given content. Original message: Invalid row format. Expected format is <operation> <number>. "add" string given.
 	 */
 	public function testParseInvalidContent1()
 	{
@@ -63,7 +63,7 @@ class FileParserTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * @expectedException \Acme\OperationsBundle\Calculator\Exception\IllegalArgumentException
-	 * @expectedExceptionMessage Cannot parse given content. Original message
+	 * @expectedExceptionMessage Cannot parse given content. Original message: Invalid row format. Expected format is <operation> <number>. "multiply" string given.
 	 */
 	public function testParseInvalidContent2()
 	{
