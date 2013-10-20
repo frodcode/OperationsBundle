@@ -37,11 +37,12 @@ class FileParser implements IParser
 
 	private function createParseResult($row)
 	{
-		$parts = explode(' ', $row);
-		if (count($parts) !== 2) {
+		$regexPattern = '~(?P<operation>[a-z]+) (?P<value>[0-9]+)~';
+		$match = preg_match($regexPattern, $row, $matches);
+		if (!$match) {
 			throw new \Acme\OperationsBundle\Calculator\Exception\IllegalArgumentException(sprintf('Invalid row format. Expected format is <operation> <number>. "%s" string given.', $row));
 		}
-		return new ParseResult($parts[0], (float) $parts[1]);
+		return new ParseResult($matches['operation'], (float) $matches['value']);
 	}
 
 }
